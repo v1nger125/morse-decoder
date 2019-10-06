@@ -38,9 +38,25 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let result = "";
+    function convert(symbol){
+        let buf = "";
+        for (let index = 0; index < symbol.length; index+=2) {
+            if (symbol.slice(index, index + 2) == "10") {buf += ".";}
+            if (symbol.slice(index, index + 2) == "11") {buf += "-";}
+        }
+        return buf;
+    }
+    for (let index = 0; index < expr.length; index+=10) {
+        if(expr.slice(index, index + 10)[0] == "*"){
+            result += " ";
+        }
+        else{
+            result += MORSE_TABLE[convert(expr.slice(index, index + 10))];
+        }
+    }
+    return result;
 }
-
 module.exports = {
     decode
 }
